@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FlowCRM — Simple Page</title>
+  <style>
+    :root{
+      --accent:#0b74ff;
+      --muted:#6b7280;
+      --bg:#f7fafc;
+      --card:#ffffff;
+      --radius:10px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:var(--bg);color:#111}
+    .container{max-width:980px;margin:32px auto;padding:20px}
+    header{display:flex;align-items:center;gap:16px}
+    .logo{width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#4fc3f7);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px}
+    h1{margin:0;font-size:20px}
+    p.lead{color:var(--muted);margin-top:6px;margin-bottom:18px}
+
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:16px}
+    .card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+    .features ul{padding-left:18px;margin:8px 0;color:var(--muted)}
+    .table{width:100%;border-collapse:collapse;margin-top:12px}
+    .table th,.table td{padding:8px 10px;text-align:left;border-bottom:1px solid #eef2f7}
+    .cta{display:flex;gap:8px;margin-top:12px}
+    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:8px;border:0;cursor:pointer}
+    .btn.secondary{background:#eef6ff;color:var(--accent)}
+    form label{display:block;font-size:13px;margin-top:10px;color:#374151}
+    input[type="text"], input[type="email"], textarea, select{
+      width:100%;padding:10px;border:1px solid #e6e9ef;border-radius:8px;margin-top:6px;
+      font-size:14px;box-sizing:border-box;
+    }
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+    @media (max-width:820px){
+      .grid{grid-template-columns:1fr; }
+      header{gap:12px}
+      .logo{width:48px;height:48px;font-size:16px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">FC</div>
+      <div>
+        <h1>FlowCRM</h1>
+        <p class="lead">Simple CRM for leads, deals and quick automation.</p>
+      </div>
+    </header>
+
+    <main class="grid" role="main">
+      <!-- Left column -->
+      <section class="card features" aria-labelledby="features-title">
+        <h2 id="features-title" style="margin-top:0;margin-bottom:6px">Overview</h2>
+        <p style="margin-top:0;color:var(--muted)">Designed for speed and clarity. Use this page as a starter template for your CRM landing or internal dashboard.</p>
+
+        <h3 style="margin-bottom:6px">Key features</h3>
+        <ul>
+          <li>Leads & deals tracking</li>
+          <li>Quick search & filters</li>
+          <li>Automation-friendly webhooks</li>
+        </ul>
+
+        <h3 style="margin-top:14px">Example deals</h3>
+        <table class="table" aria-label="example deals">
+          <thead>
+            <tr><th>Contact</th><th>Deal</th><th>Value</th><th>Stage</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>John Doe</td><td>Enterprise License</td><td>USD 5,000</td><td>Proposal</td></tr>
+            <tr><td>Jane Smith</td><td>Onboarding</td><td>USD 1,200</td><td>Demo</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top:14px">Quick actions</h3>
+        <div class="cta">
+          <button class="btn" onclick="alert('Create lead')">Create lead</button>
+          <button class="btn secondary" onclick="alert('Import CSV')">Import CSV</button>
+        </div>
+      </section>
+
+      <!-- Right column: contact / signup card -->
+      <aside class="card" aria-labelledby="signup-title">
+        <h2 id="signup-title" style="margin-top:0">Get in touch</h2>
+        <p style="color:var(--muted);margin-top:6px">Leave your details and we'll reach out.</p>
+
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <label for="name">Name</label>
+          <input id="name" type="text" placeholder="Your name" required>
+
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" required>
+
+          <label for="role">Role</label>
+          <select id="role">
+            <option>Founder</option>
+            <option>Sales</option>
+            <option>Marketing</option>
+            <option>Other</option>
+          </select>
+
+          <label for="message">Message</label>
+          <textarea id="message" rows="4" placeholder="Tell us about your use case"></textarea>
+
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button class="btn" type="submit">Request demo</button>
+            <button class="btn secondary" type="button" onclick="resetForm()">Reset</button>
+          </div>
+
+          <div id="status" style="margin-top:10px;color:var(--muted);font-size:13px"></div>
+        </form>
+      </aside>
+    </main>
+
+    <footer>
+      <div>© <strong>FlowCRM</strong> — Built for automation geeks</div>
+    </footer>
+  </div>
+
+  <script>
+    function handleSubmit(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const role = document.getElementById('role').value;
+      const message = document.getElementById('message').value.trim();
+
+      document.getElementById('status').textContent = 'Submitting...';
+
+      // Example: simulate async submit
+      setTimeout(() => {
+        document.getElementById('status').textContent = 'Thanks, ' + (name || 'there') + '! We will contact you at ' + (email || 'your email') + '.';
+        // resetForm();
+      }, 700);
+    }
+
+    function resetForm(){
+      document.getElementById('contactForm').reset();
+      document.getElementById('status').textContent = '';
+    }
+  </script>
+</body>
+</html>
